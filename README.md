@@ -58,4 +58,20 @@
 
 ### Стресс тестирование
 
+Добавим еще одну Thread Group для стресс теста
+
+![Stress Test. Thread Group](./res/Stress%20Test.%20Thread%20Group.png)
+
+Конфигурация запроса аналогична прошлому этапу
+
+График зависимости пропускной способности от количества потоков
+
+![Stress Test. Users to throughput 1](./res/Stress%20Test.%20Users%20to%20throughput%201.png)
+![Stress Test. Users to throughput 2](./res/Stress%20Test.%20Users%20to%20throughput%202.png)
+![Stress Test. Users to throughput 3](./res/Stress%20Test.%20Users%20to%20throughput%203.png)
+
+При 60-65 одновременных потоках пропускная способность перестает удовлетворять требованиям из варианта
+
 ## Вывод
+
+В ходе работы я познакомился с подходами к проведению нагрузочного и стресс тестирований, а также научился работать с jmeter
