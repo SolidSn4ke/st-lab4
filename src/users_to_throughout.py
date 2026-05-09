@@ -9,23 +9,23 @@ def main(file_name: str):
     first_503_idx = df[df["responseCode"] == 503].index.min()
     df = df.loc[:first_503_idx]
 
-    df_200 = df[df["responseCode"] == 200]
-    df_500_503 = df[df["responseCode"].isin([500, 503])]
+    df_succ = df[df["responseCode"].isin([200, 500])]
+    df_fail = df[df["responseCode"] == 503]
 
     plt.scatter(
-        df_200["allThreads"],
-        df_200["elapsed"],
+        df_succ["allThreads"],
+        df_succ["elapsed"],
         c="green",
         s=20,
-        label="200 OK",
+        label="200 OK/500 Ignore",
     )
 
     plt.scatter(
-        df_500_503["allThreads"],
-        df_500_503["elapsed"],
+        df_fail["allThreads"],
+        df_fail["elapsed"],
         c="red",
         s=20,
-        label="500/503 Error",
+        label="503 Error",
     )
 
     plt.plot([0, 1000], [870, 870])

@@ -46,15 +46,61 @@
 
 Добавим Constant Throughput Timer и Duration Assertion
 
+Так как нам нужно имитировать нагрузку в 40 запросов в минуту от одного пользователя, значение таймера поставим 320 (8 пользователей умножить на 40 запросов). Таким образом общая нагрузка от всех потоков составит $\frac{40 \,  запр. \, в \, мин. \, от \, пользователя}{60 \, с.} \cdot 8 \, пользователей = 5\frac{1}{3} \,$ запроса в секунду
+
 ![Load Test. Constant Throughput Timer](./res/Load%20Test.%20Constant%20Throughput%20Timer.png)
 
 ![Load Test. Duration Assertion](./res/Load%20Test.%20Duration%20Assertion.png)
 
-Результаты тестов
+#### Результаты тестов
 
-![Load Test. Results](./res/Load%20Test.%20Results.png)
+##### Конфигурация 1
 
-Конфигурации 1 и 2 не прошли ни одного теста, а 3 прошла все. Соответственно, выберем конфигурацию 3
+Сводная таблица
+
+![Load Test. Results](./res/Load%20Test.%20Config%201.%20Results.png)
+
+Зависимость времени отклика от времени
+
+![Load Test. Config 1. Response over time](./res/Load%20Test.%20Config%201.%20Response%20over%20time.png)
+
+Количество запросов в секунду
+
+![Load Test. Config 1. Hits per second](./res/Load%20Test.%20Config%201.%20Hits%20per%20second.png)
+
+Конфигурации 1 не подходит по времени отклика, подробный отчет доступен в папке [jmeter-load-1](./docs/jmeter-load-1/)
+
+##### Конфигурация 2
+
+Сводная таблица
+
+![Load Test. Results](./res/Load%20Test.%20Config%202.%20Results.png)
+
+Зависимость времени отклика от времени
+
+![Load Test. Config 2. Response over time](./res/Load%20Test.%20Config%202.%20Response%20over%20time.png)
+
+Количество запросов в секунду
+
+![Load Test. Config 2. Hits per second](./res/Load%20Test.%20Config%202.%20Hits%20per%20second.png)
+
+Конфигурации 2 не подходит по времени отклика, подробный отчет доступен в папке [jmeter-load-2](./docs/jmeter-load-2/)
+
+##### Конфигурация 3
+
+Сводная таблица
+
+![Load Test. Results](./res/Load%20Test.%20Config%203.%20Results.png)
+
+Зависимость времени отклика от времени
+
+![Load Test. Config 3. Response over time](./res/Load%20Test.%20Config%203.%20Response%20over%20time.png)
+
+Количество запросов в секунду
+
+![Load Test. Config 3. Hits per second](./res/Load%20Test.%20Config%203.%20Hits%20per%20second.png)
+
+Конфигурации 3 подходит по времени отклика, но 2 запроса из 8000 не прошли проверку. Так как эта конфигурация показала наилучший результат, выберем ее. Подробный отчет доступен в папке [jmeter-load-3](./docs/jmeter-load-3/)
 
 ### Стресс тестирование
 
@@ -72,6 +118,14 @@
 
 При 60-65 одновременных потоках пропускная способность перестает удовлетворять требованиям из варианта
 
+503 возникает при достижении 620 одновременных пользователей
+
+## Листинг
+
+Исходный код доступен на [github](https://github.com/SolidSn4ke/st-lab4)
+
 ## Вывод
 
 В ходе работы я познакомился с подходами к проведению нагрузочного и стресс тестирований, а также научился работать с jmeter
+<https://85.143.185.238:8443>
+911BigBoom__
