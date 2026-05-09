@@ -1,3 +1,6 @@
+
+<!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script> -->
 # Лабораторная работа 4
 
 - Выполнил: Кузьмин Артемий Андреевич
@@ -24,6 +27,8 @@
 - Средняя нагрузка, формируемая одним пользователем - 40 запросов в минуту;
 - Максимально допустимое время обработки запроса - 870 мс.
 
+<div style="page-break-after: always;"></div>
+
 ## Ход работы
 
 ### Нагрузочное тестирование
@@ -46,11 +51,13 @@
 
 Добавим Constant Throughput Timer и Duration Assertion
 
-Так как нам нужно имитировать нагрузку в 40 запросов в минуту от одного пользователя, значение таймера поставим 320 (8 пользователей умножить на 40 запросов). Таким образом общая нагрузка от всех потоков составит $\frac{40 \,  запр. \, в \, мин. \, от \, пользователя}{60 \, с.} \cdot 8 \, пользователей = 5\frac{1}{3} \,$ запроса в секунду
+Так как нам нужно имитировать нагрузку в 40 запросов в минуту от одного пользователя, значение таймера поставим 320 (8 пользователей умножить на 40 запросов). Таким образом общая нагрузка от всех потоков составит $\frac{40 \  запр. \ в \ мин. \ от \ пользователя}{60 \ с.} \cdot 8 \ пользователей = 5\frac{1}{3}$ запроса в секунду
 
 ![Load Test. Constant Throughput Timer](./res/Load%20Test.%20Constant%20Throughput%20Timer.png)
 
 ![Load Test. Duration Assertion](./res/Load%20Test.%20Duration%20Assertion.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Результаты тестов
 
@@ -70,6 +77,8 @@
 
 Конфигурации 1 не подходит по времени отклика, подробный отчет доступен в папке [jmeter-load-1](./docs/jmeter-load-1/)
 
+<div style="page-break-after: always;"></div>
+
 ##### Конфигурация 2
 
 Сводная таблица
@@ -85,6 +94,8 @@
 ![Load Test. Config 2. Hits per second](./res/Load%20Test.%20Config%202.%20Hits%20per%20second.png)
 
 Конфигурации 2 не подходит по времени отклика, подробный отчет доступен в папке [jmeter-load-2](./docs/jmeter-load-2/)
+
+<div style="page-break-after: always;"></div>
 
 ##### Конфигурация 3
 
@@ -102,23 +113,50 @@
 
 Конфигурации 3 подходит по времени отклика, но 2 запроса из 8000 не прошли проверку. Так как эта конфигурация показала наилучший результат, выберем ее. Подробный отчет доступен в папке [jmeter-load-3](./docs/jmeter-load-3/)
 
+<div style="page-break-after: always;"></div>
+
 ### Стресс тестирование
 
-Добавим еще одну Thread Group для стресс теста
+Добавим еще одну Thread Group для стресс теста. Сначала сделаем так, что тест выполняется до первой ошибки 503. Для этого ставим loop count infinity и высокий ramp up, чтобы видеть, как меняется пропускная способность со временем
 
 ![Stress Test. Thread Group](./res/Stress%20Test.%20Thread%20Group.png)
 
+Теперь добавим post processor, который позволит воспринимать код 500 как успех
+
+![Stress Test. Post Processor](./res/Stress%20Test.%20Post%20Processor.png)
+
 Конфигурация запроса аналогична прошлому этапу
 
-График зависимости пропускной способности от количества потоков
+<div style="page-break-after: always;"></div>
 
-![Stress Test. Users to throughput 1](./res/Stress%20Test.%20Users%20to%20throughput%201.png)
-![Stress Test. Users to throughput 2](./res/Stress%20Test.%20Users%20to%20throughput%202.png)
-![Stress Test. Users to throughput 3](./res/Stress%20Test.%20Users%20to%20throughput%203.png)
+Результат теста
 
-При 60-65 одновременных потоках пропускная способность перестает удовлетворять требованиям из варианта
+![Stress Test. Results](./res/Stress%20Test.%20Results.png)
 
-503 возникает при достижении 620 одновременных пользователей
+Изменение времени отклика со временем
+
+![Stress Test. Response time over time](./res/Stress%20Test.%20Response%20time%20over%20time.png)
+
+Количество запросов в секунду
+
+![Stress Test. Hits per second](./res/Stress%20Test.%20Hits%20per%20second.png)
+
+По этому графику видно, что в течение нескольких минут поддерживалась пропускная способность 30 запросов в секунду, а потом сервер вернул 503
+
+<div style="page-break-after: always;"></div>
+
+Соотношение потоков ко времени отклика
+
+![Stress Test. Users to response time](./res/Stress%20Test.%20Users%20to%20response%20time.png)
+
+По графику можно заметить, что 503 появилась примерно при трехстах одновременных пользователях
+
+По итогу теста имеем пиковые показатели производительности системы, после которых она перестает функционировать:
+
+- 30 запросов в секунду
+- 300 пользователей одновременно
+
+<div style="page-break-after: always;"></div>
 
 ## Листинг
 
@@ -127,5 +165,3 @@
 ## Вывод
 
 В ходе работы я познакомился с подходами к проведению нагрузочного и стресс тестирований, а также научился работать с jmeter
-<https://85.143.185.238:8443>
-911BigBoom__
